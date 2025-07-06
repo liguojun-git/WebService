@@ -1,0 +1,6 @@
+@MCCMWebServiceApp_HostAddress = http://localhost:5052
+
+GET {{MCCMWebServiceApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
