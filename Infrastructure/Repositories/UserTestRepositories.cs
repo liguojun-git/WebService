@@ -20,7 +20,7 @@ public class UserTestRepositories : IUserTestRepositories
     public async Task<UserTest> AuthenticateUser(string username, string password)
     {
         string sql = @"SELECT id, username, email, create_date
-                           FROM STORESOL.REALACE.UserTest 
+                           FROM shop.dbo.UserTest 
                            WHERE username = @userName AND password = @passWord";
 
         var user = db.QueryFirstOrDefault<UserTest>(sql, new { username, password });
