@@ -27,49 +27,31 @@ namespace MCCMWebServiceApp.Web.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<LoginResponse>> Login(LoginRequest loginRequest)
         {
-            try
+            var user = await _userTestService.Authenticate(loginRequest.username, loginRequest.password);
+
+            if (user == null)
             {
-                var user = await _userTestService.Authenticate(loginRequest.username, loginRequest.password);
-
-                if (user == null)
-                {
-                    return Ok(new LoginResponse
-                    {
-                        Success = false,
-                        Message = "ログインに失敗しました",
-                        UserId = 0,
-                        Username = null,
-                        Email = null, 
-                        CreateDate = DateTime.Now
-                    });
-                }
-
                 return Ok(new LoginResponse
                 {
-                    Success = true,
-                    Message = "ログインできました",
-                    UserId = user.id,
-                    Username = user.username,
-                    Email = user.email,
-                    CreateDate = user.createDate
-                });
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(new BaseResponse
-                {
                     Success = false,
-                    Message = ex.Message
+                    Message = "ログインに失敗しました",
+                    UserId = 0,
+                    Username = null,
+                    Email = null, 
+                    CreateDate = DateTime.Now
                 });
             }
-            catch (Exception ex)
+
+            return Ok(new LoginResponse
             {
-                return BadRequest(new BaseResponse
-                {
-                    Success = false,
-                    Message = $"ログインに失敗しました: {ex.Message}"
-                });
-            }
+                Success = true,
+                Message = "ログインできました",
+                UserId = user.id,
+                Username = user.username,
+                Email = user.email,
+                CreateDate = user.createDate
+            });
+           
         }
 
 

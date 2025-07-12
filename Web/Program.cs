@@ -3,6 +3,7 @@ using MCCMWebServiceApp.Infrastructure.Interfaces;
 using MCCMWebServiceApp.Infrastructure.Repositories;
 using MCCMWebServiceApp.Infrastructure.SqlContext;
 using MCCMWebServiceApp.Web.Filter;
+using Web.Filiter;
 
 namespace Web
 {
@@ -19,7 +20,10 @@ namespace Web
 
             builder.Services.AddControllers(options =>
             {
-                options.Filters.Add<LogFilter>(); 
+                // LogFilter
+                options.Filters.Add<LogFilter>();
+                // ExceptionFilter
+                options.Filters.Add<ExceptionFilter>();
             });
 
             // Add services to the container.
